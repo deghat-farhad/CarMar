@@ -1,9 +1,9 @@
 package deghat.farhad.common.domain.usecase.base
 
-abstract class UseCase<T, P>() {
-    abstract suspend fun buildUseCase(params: P): ModelWrapper<T>
+abstract class UseCase<T>() {
+    abstract suspend fun buildUseCase(): ModelWrapper<T>
 
-    suspend fun execute(params: P, onResult: (ModelWrapper<T>) -> Unit = {}) {
-        onResult(buildUseCase(params))
+    suspend fun execute(onResult: (ModelWrapper<T>) -> Unit = {}) {
+        onResult(buildUseCase())
     }
 }
