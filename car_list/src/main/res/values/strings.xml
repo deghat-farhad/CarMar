@@ -1,0 +1,9 @@
+<resources>
+    <string name="address_title">address: </string>
+    <string name="engineType_title">engineType: </string>
+    <string name="exterior_title">exterior: </string>
+    <string name="fuel_title">fuel: </string>
+    <string name="interior_title">interior: </string>
+    <string name="name_title">name: </string>
+    <string name="vin_title">vin: </string>
+</resources>
