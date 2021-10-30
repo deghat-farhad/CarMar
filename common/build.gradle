@@ -58,5 +58,9 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
+    //NetworkResponseAdapter
     api "com.github.haroldadmin:NetworkResponseAdapter:$NetworkResponseAdapter_version"
+
+    //navigation
+    api "androidx.navigation:navigation-fragment-ktx:$navigation_version"
 }
