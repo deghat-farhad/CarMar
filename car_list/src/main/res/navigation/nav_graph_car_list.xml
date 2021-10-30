@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/fragPlacemarkList"
-        android:name="deghat.farhad.carlist.presentation.FragPlacemarkList"
+        android:name="deghat.farhad.carlist.presentation.view.FragPlacemarkList"
         android:label="FragPlacemarkList" />
 </navigation>
