@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "CarMar"
 include ':app'
+include ':car_list'

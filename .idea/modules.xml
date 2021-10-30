@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CarMar.iml" filepath="$PROJECT_DIR$/.idea/modules/CarMar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CarMar.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CarMar.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CarList/CarMar.car_list.iml" filepath="$PROJECT_DIR$/.idea/modules/CarList/CarMar.car_list.iml" />
+    </modules>
+  </component>
+</project>
