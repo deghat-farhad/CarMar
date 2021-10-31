@@ -19,8 +19,11 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import deghat.farhad.carlist.BR
 import deghat.farhad.carlist.R
-import deghat.farhad.carlist.presentation.item.RecItmPlacemark
+import deghat.farhad.carlist.presentation.StateHandler
+import deghat.farhad.carlist.presentation.item.MapItmPlacemark
 import deghat.farhad.carlist.presentation.page.placemark_map.viewmodel.ViwMdlPlacemarkMap
+import deghat.farhad.common.presentation.UiState
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragPlacemarkMap : Fragment(), OnMapReadyCallback {
@@ -28,6 +31,8 @@ class FragPlacemarkMap : Fragment(), OnMapReadyCallback {
         const val PERMISSIONS_REQUEST_LOCATION = 101
     }
 
+    @Inject
+    lateinit var stateHandler: StateHandler
 
     private val viewModel: ViwMdlPlacemarkMap by viewModels()
 
@@ -50,6 +55,7 @@ class FragPlacemarkMap : Fragment(), OnMapReadyCallback {
             false
         ).apply {
             setVariable(BR.viewmodel, viewModel)
+            setVariable(BR.stateHandler, stateHandler)
             lifecycleOwner = this@FragPlacemarkMap
         }.root
     }
@@ -59,19 +65,23 @@ class FragPlacemarkMap : Fragment(), OnMapReadyCallback {
             mapView.getMapAsync(this)
         }
 
-        viewModel.list.observe(viewLifecycleOwner) { placemarks ->
-            placemarks.filterIsInstance<RecItmPlacemark.Placemark>().forEach {
-                googleMap.addMarker(
-                    MarkerOptions()
-                        .position(
-                            LatLng(
-                                it.coordinates.latitude,
-                                it.coordinates.longitude
+        viewModel.state.observe(viewLifecycleOwner) { state ->
+
+            if (state is UiState.HasData<List<MapItmPlacemark>>) {
+                state.content.forEach {
+                    googleMap.addMarker(
+                        MarkerOptions()
+                            .position(
+                                LatLng(
+                                    it.coordinates.latitude,
+                                    it.coordinates.longitude
+                                )
                             )
-                        )
-                        .title(it.name)
-                )
+                            .title(it.name)
+                    )
+                }
             }
+            stateHandler.setUiState(state)
         }
     }
 

@@ -9,7 +9,7 @@
 
         <variable
             name="stateHandler"
-            type="deghat.farhad.carlist.presentation.page.placemark_list.view.StateHandlerFragPlacemarkList" />
+            type="deghat.farhad.carlist.presentation.StateHandler" />
 
         <import type="android.view.View" />
     </data>

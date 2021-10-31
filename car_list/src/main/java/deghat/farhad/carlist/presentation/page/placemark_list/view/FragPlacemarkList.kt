@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import deghat.farhad.carlist.BR
 import deghat.farhad.carlist.R
+import deghat.farhad.carlist.presentation.StateHandler
 import deghat.farhad.carlist.presentation.page.placemark_list.viewmodel.ViwMdlPlacemarkList
 import deghat.farhad.common.presentation.UiState
 import deghat.farhad.common.presentation.util.recycler_view.GenericRecyclerAdapter
@@ -25,7 +26,7 @@ class FragPlacemarkList : Fragment() {
     private val viewModel: ViwMdlPlacemarkList by viewModels()
 
     @Inject
-    lateinit var stateHandlerFragPlacemarkList: StateHandlerFragPlacemarkList
+    lateinit var stateHandler: StateHandler
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,14 +44,14 @@ class FragPlacemarkList : Fragment() {
             false
         ).apply {
             setVariable(BR.viewmodel, viewModel)
-            setVariable(BR.stateHandler, stateHandlerFragPlacemarkList)
+            setVariable(BR.stateHandler, stateHandler)
             lifecycleOwner = this@FragPlacemarkList
         }.root
     }
 
     private fun setObservers() {
         viewModel.state.observe(viewLifecycleOwner) {
-            stateHandlerFragPlacemarkList.setUiState(it)
+            stateHandler.setUiState(it)
             if (it is UiState.HasData) {
                 val recViewPlacemark =
                     requireActivity().findViewById<RecyclerView>(R.id.recViwPlaceMark)

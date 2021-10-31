@@ -48,7 +48,7 @@ class ViwMdlPlacemarkList @Inject constructor(
                     is ModelWrapper.Success -> {
                         mState.postValue(
                             if (it.model.isNotEmpty())
-                                UiState.HasData(placemarkItemMapper.mapToPresentation(it.model))
+                                UiState.HasData(placemarkItemMapper.mapToRecItmPlacemark(it.model))
                             else
                                 UiState.NoData(::refresh)
                         )

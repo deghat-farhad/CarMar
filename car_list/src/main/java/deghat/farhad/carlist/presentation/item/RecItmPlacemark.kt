@@ -6,7 +6,7 @@ import deghat.farhad.common.presentation.util.recycler_view.Visitable
 sealed class RecItmPlacemark : Visitable {
     data class Placemark(
         val address: String,
-        val coordinates: CoordinatesItm,
+        val coordinates: CoordinateItm,
         val engineType: String,
         val exterior: String,
         val fuel: Int,
@@ -19,8 +19,3 @@ sealed class RecItmPlacemark : Visitable {
         }
     }
 }
-
-data class CoordinatesItm(
-    val latitude: Double,
-    val longitude: Double
-)

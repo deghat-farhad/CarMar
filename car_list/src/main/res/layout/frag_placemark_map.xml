@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -7,6 +7,11 @@
             name="viewmodel"
             type="deghat.farhad.carlist.presentation.page.placemark_map.viewmodel.ViwMdlPlacemarkMap" />
 
+        <variable
+            name="stateHandler"
+            type="deghat.farhad.carlist.presentation.StateHandler" />
+
+        <import type="android.view.View" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,7 +23,34 @@
         <com.google.android.gms.maps.MapView
             android:id="@+id/map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="@{stateHandler.showData? View.VISIBLE : View.GONE}" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="100dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{stateHandler.showStatusMessage ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                app:textId="@{stateHandler.statusMessage}"
+                tools:text="status message" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="@{() -> stateHandler.actionButtonOnClick.invoke()}"
+                android:visibility="@{stateHandler.showActionButton ? View.VISIBLE : View.GONE}"
+                app:textId="@{stateHandler.actionButtonText}"
+                tools:text="action button" />
+        </LinearLayout>
 
     </FrameLayout>
 </layout>

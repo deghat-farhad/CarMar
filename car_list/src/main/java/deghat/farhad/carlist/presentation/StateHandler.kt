@@ -1,4 +1,4 @@
-package deghat.farhad.carlist.presentation.page.placemark_list.view
+package deghat.farhad.carlist.presentation
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import deghat.farhad.carlist.R
 import deghat.farhad.common.presentation.UiState
 import javax.inject.Inject
 
-class StateHandlerFragPlacemarkList @Inject constructor() {
+class StateHandler @Inject constructor() {
     val statusMessage by lazy { MutableLiveData<Int>() }
     val showStatusMessage by lazy { MutableLiveData<Boolean>() }
     val showActionButton by lazy { MutableLiveData<Boolean>() }
