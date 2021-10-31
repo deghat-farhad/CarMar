@@ -15,7 +15,7 @@ class PlacemarkListEntityMapper @Inject constructor(): MapperToDomain<PlacemarkL
     private fun mapPlacemarkEntityToPlacemark(from: PlacemarkEntity): Placemark{
         return Placemark(
             from.address,
-            Coordinates(from.coordinates[0], from.coordinates[1]),
+            Coordinates(from.coordinates[1], from.coordinates[0]),
             from.engineType,
             from.exterior,
             from.fuel,

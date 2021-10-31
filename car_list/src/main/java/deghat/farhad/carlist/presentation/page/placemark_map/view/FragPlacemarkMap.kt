@@ -14,9 +14,12 @@ import androidx.fragment.app.viewModels
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import deghat.farhad.carlist.BR
 import deghat.farhad.carlist.R
+import deghat.farhad.carlist.presentation.item.RecItmPlacemark
 import deghat.farhad.carlist.presentation.page.placemark_map.viewmodel.ViwMdlPlacemarkMap
 
 @AndroidEntryPoint
@@ -51,9 +54,24 @@ class FragPlacemarkMap : Fragment(), OnMapReadyCallback {
         }.root
     }
 
-    fun setObservers() {
+    private fun setObservers() {
         viewModel.isPermissionGranted.observe(viewLifecycleOwner) {
             mapView.getMapAsync(this)
+        }
+
+        viewModel.list.observe(viewLifecycleOwner) { placemarks ->
+            placemarks.filterIsInstance<RecItmPlacemark.Placemark>().forEach {
+                googleMap.addMarker(
+                    MarkerOptions()
+                        .position(
+                            LatLng(
+                                it.coordinates.latitude,
+                                it.coordinates.longitude
+                            )
+                        )
+                        .title(it.name)
+                )
+            }
         }
     }
 
@@ -106,5 +124,6 @@ class FragPlacemarkMap : Fragment(), OnMapReadyCallback {
         ) {
             this.googleMap.isMyLocationEnabled = true
         }
+        viewModel.getPlacemarks()
     }
 }
