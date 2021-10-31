@@ -1,4 +1,4 @@
-package deghat.farhad.carlist.presentation.viewmodel
+package deghat.farhad.carlist.presentation.page.placemark_list.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,4 +1,4 @@
-package deghat.farhad.carlist.presentation.view
+package deghat.farhad.carlist.presentation.page.placemark_list.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

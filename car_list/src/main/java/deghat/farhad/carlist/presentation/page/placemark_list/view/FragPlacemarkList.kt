@@ -1,4 +1,4 @@
-package deghat.farhad.carlist.presentation.view
+package deghat.farhad.carlist.presentation.page.placemark_list.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import deghat.farhad.carlist.BR
 import deghat.farhad.carlist.R
-import deghat.farhad.carlist.presentation.viewmodel.ViwMdlPlacemarkList
+import deghat.farhad.carlist.presentation.page.placemark_list.viewmodel.ViwMdlPlacemarkList
 import deghat.farhad.common.presentation.UiState
 import deghat.farhad.common.presentation.util.recycler_view.GenericRecyclerAdapter
 import javax.inject.Inject

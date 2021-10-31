@@ -5,11 +5,11 @@
 
         <variable
             name="viewmodel"
-            type="deghat.farhad.carlist.presentation.viewmodel.ViwMdlPlacemarkList" />
+            type="deghat.farhad.carlist.presentation.page.placemark_list.viewmodel.ViwMdlPlacemarkList" />
 
         <variable
             name="stateHandler"
-            type="deghat.farhad.carlist.presentation.view.StateHandlerFragPlacemarkList" />
+            type="deghat.farhad.carlist.presentation.page.placemark_list.view.StateHandlerFragPlacemarkList" />
 
         <import type="android.view.View" />
     </data>
@@ -18,7 +18,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.view.FragPlacemarkList">
+        tools:context=".presentation.page.placemark_list.view.FragPlacemarkList">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeContainer"
