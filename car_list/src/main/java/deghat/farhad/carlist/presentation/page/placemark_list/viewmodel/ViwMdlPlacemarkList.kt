@@ -11,6 +11,7 @@ import deghat.farhad.carlist.presentation.item.RecItmPlacemark
 import deghat.farhad.carlist.presentation.mapper.PlacemarkItemMapper
 import deghat.farhad.common.domain.usecase.base.ModelWrapper
 import deghat.farhad.common.presentation.UiState
+import deghat.farhad.common.presentation.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,6 +22,7 @@ class ViwMdlPlacemarkList @Inject constructor(
 ) : ViewModel() {
     private val mState = MutableLiveData<UiState<List<RecItmPlacemark>>>()
     val state: LiveData<UiState<List<RecItmPlacemark>>> = mState
+    val navigateToPlacemarkMap by lazy { SingleLiveEvent<Unit>() }
 
     init {
         getPlacemarks()
@@ -68,5 +70,9 @@ class ViwMdlPlacemarkList @Inject constructor(
 
     fun retry() {
         getPlacemarks()
+    }
+
+    fun navigateToPlacemarkMap() {
+        navigateToPlacemarkMap.postValue(Unit)
     }
 }

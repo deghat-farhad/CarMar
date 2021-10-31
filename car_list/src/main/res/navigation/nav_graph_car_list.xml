@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_car_list"
     app:startDestination="@id/fragPlacemarkList">
 
     <fragment
         android:id="@+id/fragPlacemarkList"
-        android:name="deghat.farhad.carlist.presentation.page.list.view.FragPlacemarkList"
-        android:label="FragPlacemarkList" />
+        android:name="deghat.farhad.carlist.presentation.page.placemark_list.view.FragPlacemarkList"
+        android:label="FragPlacemarkList"
+        tools:layout="@layout/frag_placemark_list">
+        <action
+            android:id="@+id/action_fragPlacemarkList_to_fragMap"
+            app:destination="@id/fragMap" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragMap"
+        android:name="deghat.farhad.carlist.presentation.page.placemark_map.view.FragPlacemarkMap"
+        android:label="frag_map"
+        tools:layout="@layout/frag_placemark_map" />
 </navigation>
