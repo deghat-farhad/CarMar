@@ -69,4 +69,9 @@ dependencies {
 
     //swipeRefresh
     api "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefresh_version"
+
+    //googlePlay
+    api "com.google.android.gms:play-services-maps:$googlePlayVersion"
+    api "com.google.android.gms:play-services-location:$googlePlayVersion"
+    api "com.google.android.gms:play-services-places:$googlePlayVersion"
 }
