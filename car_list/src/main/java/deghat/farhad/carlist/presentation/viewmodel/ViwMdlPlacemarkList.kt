@@ -1,13 +1,16 @@
 package deghat.farhad.carlist.presentation.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import deghat.farhad.carlist.R
 import deghat.farhad.carlist.domain.usecase.GetPlacemarks
 import deghat.farhad.carlist.presentation.item.RecItmPlacemark
 import deghat.farhad.carlist.presentation.mapper.PlacemarkItemMapper
 import deghat.farhad.common.domain.usecase.base.ModelWrapper
+import deghat.farhad.common.presentation.UiState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,9 +19,8 @@ class ViwMdlPlacemarkList @Inject constructor(
     private val getPlacemarks: GetPlacemarks,
     private val placemarkItemMapper: PlacemarkItemMapper
 ) : ViewModel() {
-    //private val mPlacemarks =
-    val placemarks: MutableLiveData<List<RecItmPlacemark>> =
-        MutableLiveData<List<RecItmPlacemark>>()
+    private val mState = MutableLiveData<UiState<List<RecItmPlacemark>>>()
+    val state: LiveData<UiState<List<RecItmPlacemark>>> = mState
 
     init {
         getPlacemarks()
@@ -26,18 +28,45 @@ class ViwMdlPlacemarkList @Inject constructor(
 
     private fun getPlacemarks() {
         viewModelScope.launch {
+            mState.postValue(UiState.Loading())
             getPlacemarks.execute {
                 when (it) {
-                    is ModelWrapper.NetworkError -> TODO()
-                    is ModelWrapper.ServerError -> TODO()
-                    is ModelWrapper.Success -> placemarks.postValue(
-                        placemarkItemMapper.mapToPresentation(
-                            it.model
+                    is ModelWrapper.NetworkError -> mState.postValue(
+                        UiState.Error(
+                            R.string.network_error_message,
+                            ::retry
                         )
                     )
-                    is ModelWrapper.UnknownError -> TODO()
+                    is ModelWrapper.ServerError -> mState.postValue(
+                        UiState.Error(
+                            R.string.server_error_message,
+                            ::retry
+                        )
+                    )
+                    is ModelWrapper.Success -> {
+                        mState.postValue(
+                            if (it.model.isNotEmpty())
+                                UiState.HasData(placemarkItemMapper.mapToPresentation(it.model))
+                            else
+                                UiState.NoData(::refresh)
+                        )
+                    }
+                    is ModelWrapper.UnknownError -> mState.postValue(
+                        UiState.Error(
+                            R.string.unknown_error_message,
+                            ::retry
+                        )
+                    )
                 }
             }
         }
+    }
+
+    fun refresh() {
+        getPlacemarks()
+    }
+
+    fun retry() {
+        getPlacemarks()
     }
 }

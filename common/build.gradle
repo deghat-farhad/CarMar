@@ -66,4 +66,7 @@ dependencies {
 
     //navigation
     api "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+
+    //swipeRefresh
+    api "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefresh_version"
 }

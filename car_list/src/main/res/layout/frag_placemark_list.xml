@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewmodel"
             type="deghat.farhad.carlist.presentation.viewmodel.ViwMdlPlacemarkList" />
+
+        <variable
+            name="stateHandler"
+            type="deghat.farhad.carlist.presentation.view.StateHandlerFragPlacemarkList" />
+
+        <import type="android.view.View" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,10 +20,45 @@
         android:layout_height="match_parent"
         tools:context=".presentation.view.FragPlacemarkList">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recViwPlaceMark"
-            android:padding="5dp" />
+            app:onRefreshListener="@{() -> viewmodel.refresh()}"
+            app:refreshing="@{stateHandler.isRefreshing()}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recViwPlaceMark"
+                android:padding="5dp"
+                android:visibility="@{stateHandler.showData? View.VISIBLE : View.GONE}" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="100dp"
+            android:orientation="vertical"
+            android:visibility="@{stateHandler.showStatusMessage ? View.VISIBLE : View.GONE}"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textId="@{stateHandler.statusMessage}"
+                android:textAlignment="center"
+                tools:text="status message" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="@{() -> stateHandler.actionButtonOnClick.invoke()}"
+                android:visibility="@{stateHandler.showActionButton ? View.VISIBLE : View.GONE}"
+                app:textId="@{stateHandler.actionButtonText}"
+                tools:text="action button" />
+        </LinearLayout>
     </FrameLayout>
 </layout>

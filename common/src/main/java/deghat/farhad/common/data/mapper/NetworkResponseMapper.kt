@@ -17,7 +17,7 @@ class NetworkResponseMapper<From : Any, To : Any> @Inject constructor() {
                 )
             )
             is NetworkResponse.ServerError<ErrorResponse> -> ModelWrapper.ServerError(
-                networkResponse.body?.message ?: listOf()
+                networkResponse.body?.message ?: "Unknown Error"
             )
             is NetworkResponse.NetworkError -> ModelWrapper.NetworkError(networkResponse.error)
             is NetworkResponse.UnknownError -> ModelWrapper.UnknownError(networkResponse.error)

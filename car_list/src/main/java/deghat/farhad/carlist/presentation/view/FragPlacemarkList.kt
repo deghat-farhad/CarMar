@@ -14,12 +14,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import deghat.farhad.carlist.BR
 import deghat.farhad.carlist.R
 import deghat.farhad.carlist.presentation.viewmodel.ViwMdlPlacemarkList
+import deghat.farhad.common.presentation.UiState
 import deghat.farhad.common.presentation.util.recycler_view.GenericRecyclerAdapter
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragPlacemarkList : Fragment() {
 
     private val viewModel: ViwMdlPlacemarkList by viewModels()
+
+    @Inject
+    lateinit var stateHandlerFragPlacemarkList: StateHandlerFragPlacemarkList
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,21 +42,25 @@ class FragPlacemarkList : Fragment() {
             false
         ).apply {
             setVariable(BR.viewmodel, viewModel)
+            setVariable(BR.stateHandler, stateHandlerFragPlacemarkList)
             lifecycleOwner = this@FragPlacemarkList
         }.root
     }
 
     private fun setObservers() {
-        viewModel.placemarks.observe(viewLifecycleOwner) {
-            val recViewPlacemark =
-                requireActivity().findViewById<RecyclerView>(R.id.recViwPlaceMark)
-            val adapterPlacemark = GenericRecyclerAdapter(it) { parent, viewId ->
-                RecHldrPlacemark.from(parent, viewId)
-            }
-            recViewPlacemark.apply {
-                adapter = adapterPlacemark
-                layoutManager = LinearLayoutManager(requireContext())
-                hasFixedSize()
+        viewModel.state.observe(viewLifecycleOwner) {
+            stateHandlerFragPlacemarkList.setUiState(it)
+            if (it is UiState.HasData) {
+                val recViewPlacemark =
+                    requireActivity().findViewById<RecyclerView>(R.id.recViwPlaceMark)
+                val adapterPlacemark = GenericRecyclerAdapter(it.content) { parent, viewId ->
+                    RecHldrPlacemark.from(parent, viewId)
+                }
+                recViewPlacemark.apply {
+                    adapter = adapterPlacemark
+                    layoutManager = LinearLayoutManager(requireContext())
+                    hasFixedSize()
+                }
             }
         }
     }

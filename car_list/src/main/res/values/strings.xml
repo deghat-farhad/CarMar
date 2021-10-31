@@ -6,4 +6,11 @@
     <string name="interior_title">interior: </string>
     <string name="name_title">name: </string>
     <string name="vin_title">vin: </string>
+    <string name="network_error_message">check your network connection and try again please.</string>
+    <string name="server_error_message">something\'s wrong with the server, contact the server administrator and try again please.</string>
+    <string name="unknown_error_message">something went wrong, try again later please.</string>
+    <string name="no_data">there is nothing to show.</string>
+    <string name="retry">Retry</string>
+    <string name="refresh">Refresh</string>
+    <string name="loading">Loading ...</string>
 </resources>
