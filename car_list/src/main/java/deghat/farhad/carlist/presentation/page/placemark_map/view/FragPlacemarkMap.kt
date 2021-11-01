@@ -68,8 +68,9 @@ class FragPlacemarkMap : Fragment(), OnMapReadyCallback {
         viewModel.state.observe(viewLifecycleOwner) { state ->
 
             if (state is UiState.HasData<List<MapItmPlacemark>>) {
+                googleMap.clear()
                 state.content.forEach {
-                    googleMap.addMarker(
+                    val marker = googleMap.addMarker(
                         MarkerOptions()
                             .position(
                                 LatLng(
@@ -79,6 +80,8 @@ class FragPlacemarkMap : Fragment(), OnMapReadyCallback {
                             )
                             .title(it.name)
                     )
+                    if (it.showInfo)
+                        marker.showInfoWindow()
                 }
             }
             stateHandler.setUiState(state)
@@ -133,6 +136,10 @@ class FragPlacemarkMap : Fragment(), OnMapReadyCallback {
             == PackageManager.PERMISSION_GRANTED
         ) {
             this.googleMap.isMyLocationEnabled = true
+        }
+        googleMap.setOnMarkerClickListener {
+            viewModel.onMarkerClick(it.title)
+            true
         }
         viewModel.getPlacemarks()
     }

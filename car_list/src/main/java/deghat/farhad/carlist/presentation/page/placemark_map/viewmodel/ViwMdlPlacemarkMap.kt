@@ -22,6 +22,8 @@ class ViwMdlPlacemarkMap @Inject constructor(
 
     private val mState = MutableLiveData<UiState<List<MapItmPlacemark>>>()
     val state: LiveData<UiState<List<MapItmPlacemark>>> = mState
+    private val mapItmPlacemarks: MutableList<MapItmPlacemark> = mutableListOf()
+    var isShowingAll = true
 
     val isPermissionGranted by lazy { MutableLiveData<Boolean>() }
     fun setPermissionGranted(value: Boolean) {
@@ -46,12 +48,11 @@ class ViwMdlPlacemarkMap @Inject constructor(
                         )
                     )
                     is ModelWrapper.Success -> {
-                        mState.postValue(
-                            if (it.model.isNotEmpty())
-                                UiState.HasData(placemarkItemMapper.mapToMapItmPlacemark(it.model))
-                            else
-                                UiState.NoData(::refresh)
-                        )
+                        if (it.model.isNotEmpty()) {
+                            mapItmPlacemarks.addAll(placemarkItemMapper.mapToMapItmPlacemark(it.model))
+                            showAll()
+                        } else
+                            mState.postValue(UiState.NoData(::refresh))
                     }
                     is ModelWrapper.UnknownError -> mState.postValue(
                         UiState.Error(
@@ -64,11 +65,34 @@ class ViwMdlPlacemarkMap @Inject constructor(
         }
     }
 
-    fun refresh() {
+    private fun refresh() {
         getPlacemarks()
     }
 
-    fun retry() {
+    private fun retry() {
         getPlacemarks()
+    }
+
+    private fun showJust(name: String) {
+        isShowingAll = false
+        val mapItmPlacemark = mapItmPlacemarks.first { it.name == name }
+        mapItmPlacemark.showInfo = true
+        mState.postValue(UiState.HasData(listOf(mapItmPlacemark)))
+    }
+
+    private fun showAll(name: String? = null) {
+        name?.let {
+            val mapItmPlacemark = mapItmPlacemarks.first { it.name == name }
+            mapItmPlacemark.showInfo = false
+        }
+        isShowingAll = true
+        mState.postValue(UiState.HasData(mapItmPlacemarks))
+    }
+
+    fun onMarkerClick(name: String) {
+        if (isShowingAll)
+            showJust(name)
+        else
+            showAll(name)
     }
 }
